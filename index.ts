@@ -11,12 +11,28 @@ const main = async () => {
       const priceString = price.replace("£", "");
       return parseFloat(priceString);
     };
+    const convertRating = (rating: string) => {
+      switch (rating) {
+        case "One":
+          return 1;
+        case "Two":
+          return 2;
+        case "Three":
+          return 3;
+        case "Four":
+          return 4;
+        case "Five":
+          return 5;
+        default:
+          return 0;
+      }
+    };
     const books = Array.from(document.querySelectorAll(".product_pod"));
     const data = books.map((book: any) => ({
       title: book.querySelector("h3")?.textContent,
       price: convertPrice(book.querySelector(".price_color")?.textContent),
       imgUrl: book.querySelector("img")?.src,
-      rating: book.querySelector(".star-rating")?.classList[1],
+      rating: convertRating(book.querySelector(".star-rating")?.classList[1]),
     }));
     return data;
   });
