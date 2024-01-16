@@ -8,15 +8,13 @@ const main = async () => {
   await page.goto(URL);
   const bookData = await page.evaluate(() => {
     const books = Array.from(document.querySelectorAll(".product_pod"));
-    // return books;
-    return books.map((book: any) => {
-      const title = book.querySelector("h3 a").title;
-      const price = book.querySelector(".price_color").textContent;
-      return {
-        title,
-        price,
-      };
-    });
+    const data = books.map((book: any) => ({
+      title: book.querySelector("h3")?.textContent,
+      price: book.querySelector(".price_color")?.textContent,
+      imgUrl: book.querySelector("img")?.src,
+      rating: book.querySelector(".star-rating")?.classList[1],
+    }));
+    return data;
   });
   console.log(bookData);
   await browser.close();
