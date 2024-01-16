@@ -1,3 +1,4 @@
+import fs from "fs";
 import puppeteer, { Browser } from "puppeteer";
 
 const URL = "https://books.toscrape.com/";
@@ -38,6 +39,11 @@ const main = async () => {
   });
   console.log(bookData);
   await browser.close();
+
+  fs.writeFile("books.json", JSON.stringify(bookData), (err) => {
+    if (err) throw err;
+    console.log("The file has been saved at : " + __dirname + "/books.json");
+  });
 };
 
 main();
